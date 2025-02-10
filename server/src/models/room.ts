@@ -21,6 +21,12 @@ const  Room = sequelize.define(
         type: DataTypes.BOOLEAN,
         allowNull:false,
         defaultValue:true,
+    },createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+    updatedAt: {
+      type: DataTypes.DATE
     }
   },
   {
@@ -29,5 +35,6 @@ const  Room = sequelize.define(
 );
 
 export default Room;
+
 
 

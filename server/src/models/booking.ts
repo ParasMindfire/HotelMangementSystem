@@ -34,6 +34,12 @@ const  Booking = sequelize.define(
         key: 'room_number'
       },
       onDelete:'CASCADE'
+    },createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+    updatedAt: {
+      type: DataTypes.DATE
     }
   },
   {
