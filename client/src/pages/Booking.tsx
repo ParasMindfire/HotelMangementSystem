@@ -1,31 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { getBookings, addBooking, updateBooking, deleteBooking } from '../api';
+import BookingForm from '../components/BookingForm';
+import BookingList from '../components/BookingList';
 
-const Booking:React.FC=()=> {
-  return (
-    <div>
-      <h2>Room Booking</h2>
-        <form action="">
-            <label htmlFor="type">Name</label>
-            <input type="text" id="type" name="type" required />
+const Booking: React.FC = () => {
+    const [bookings, setBookings] = useState([]);
 
-            <label htmlFor="type">Email</label>
-            <input type="email" id="type" name="type" required />
+    useEffect(() => {
+        fetchBookings();
+    }, []);
 
-            <label htmlFor="check_in">Check IN</label>
-            <input type="text" id="check_in" name="check_in" required />
+    const fetchBookings = async () => {
+        const { data } = await getBookings();
 
-            <label htmlFor="check_out">Check OUT</label>
-            <input type="number" id="check_out" name="check_out" required />
+        console.log("fetching book ",data);
+        setBookings(data.getBooking);
+    };
 
-            <label htmlFor="room">room:</label>
-            <input type="number" id="room" name="room" required />
+    const handleAddBooking = async (bookingData: any) => {
+        await addBooking(bookingData);
+        fetchBookings();
+    };
 
-            <button type="submit">
-                Submit
-            </button>
-        </form>
-    </div>
-  )
-}
+    const handleUpdateBooking = async (updateData: any) => {
+        await updateBooking(updateData);
+        fetchBookings();
+    };
 
-export default Booking
+    const handleDeleteBooking = async (guest_mail: string) => {
+        await deleteBooking(guest_mail);
+        fetchBookings();
+    };
+
+    return (
+        <div className="container">
+            <h2>Room Booking</h2>
+            <BookingForm onSubmit={handleAddBooking} />
+            <BookingList bookings={bookings} onUpdate={handleUpdateBooking} onDelete={handleDeleteBooking} />
+        </div>
+    );
+};
+
+export default Booking;
