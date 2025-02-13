@@ -9,6 +9,8 @@ const getAllBooking=async(req:Request,res:Response,next:NextFunction):Promise<an
 const postBooking=async(req:Request,res:Response,next:NextFunction):Promise<any>=>{
     const {guest_name,guest_mail,check_in,check_out,roomNumber}=req.body;
 
+    console.log(guest_name+" "+guest_mail);
+
     const [insertBooking]:any[]=await sequelize.query("insert into booking (guest_name,guest_mail,check_in,check_out,roomNumber) values (?,?,?,?,?)",{
         replacements:[guest_name,guest_mail,check_in,check_out,roomNumber]
     })

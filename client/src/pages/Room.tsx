@@ -5,6 +5,7 @@ import RoomList from '../components/RoomList';
 
 const Room: React.FC = () => {
     const [rooms, setRooms] = useState([]);
+    const [editingRoom, setEditingRoom] = useState<any | null>(null); 
 
     useEffect(() => {
         fetchRooms();
@@ -15,14 +16,18 @@ const Room: React.FC = () => {
         setRooms(data.getRooms);
     };
 
-    const handleAddRoom = async (roomData: any) => {
-        await addRoom(roomData);
+    const handleAddOrUpdateRoom = async (roomData: any) => {
+        if (editingRoom) {
+            await updateRoom(roomData);
+        } else {
+            await addRoom(roomData); 
+        }
+        setEditingRoom(null);
         fetchRooms();
     };
 
-    const handleUpdateRoom = async (updateData: any) => {
-        await updateRoom(updateData);
-        fetchRooms();
+    const handleEditRoom = (room: any) => {
+        setEditingRoom(room); 
     };
 
     const handleDeleteRoom = async (room_number: number) => {
@@ -33,8 +38,8 @@ const Room: React.FC = () => {
     return (
         <div className="container">
             <h2>Room Management</h2>
-            <RoomForm onSubmit={handleAddRoom} />
-            <RoomList rooms={rooms} onUpdate={handleUpdateRoom} onDelete={handleDeleteRoom} />
+            <RoomForm onSubmit={handleAddOrUpdateRoom} editingRoom={editingRoom} />
+            <RoomList rooms={rooms} onEdit={handleEditRoom} onDelete={handleDeleteRoom} />
         </div>
     );
 };

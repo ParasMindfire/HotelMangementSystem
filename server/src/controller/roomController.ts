@@ -9,12 +9,12 @@ const getAllrooms=async(req:Request,res:Response,next:NextFunction):Promise<any>
 
 const postRooms=async(req:Request,res:Response,next:NextFunction):Promise<any>=>{
     console.log("heloooooo");
-    const {type,price,avilability}=req.body;
+    const {room_number,type,price,avilability}=req.body;
 
     console.log("body ",req.body);
 
-    const [insertRoom]:any[]=await sequelize.query("insert into room (type,price,avilability) values (?,?,?)",{
-        replacements:[type,price,avilability]
+    const [insertRoom]:any[]=await sequelize.query("insert into room (room_number,type,price,avilability) values (?,?,?,?)",{
+        replacements:[room_number,type,price,avilability]
     })
 
     return res.status(200).json(insertRoom);

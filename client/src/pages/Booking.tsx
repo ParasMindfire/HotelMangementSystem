@@ -5,6 +5,7 @@ import BookingList from '../components/BookingList';
 
 const Booking: React.FC = () => {
     const [bookings, setBookings] = useState([]);
+    const [editBooking, setEditBooking] = useState(null);
 
     useEffect(() => {
         fetchBookings();
@@ -12,19 +13,21 @@ const Booking: React.FC = () => {
 
     const fetchBookings = async () => {
         const { data } = await getBookings();
-
-        console.log("fetching book ",data);
         setBookings(data.getBooking);
     };
 
-    const handleAddBooking = async (bookingData: any) => {
-        await addBooking(bookingData);
+    const handleAddOrUpdateBooking = async (bookingData: any) => {
+        if (editBooking) {
+            await updateBooking(bookingData);
+        } else {
+            await addBooking(bookingData);
+        }
+        setEditBooking(null);
         fetchBookings();
     };
 
-    const handleUpdateBooking = async (updateData: any) => {
-        await updateBooking(updateData);
-        fetchBookings();
+    const handleUpdateClick = (booking: any) => {
+        setEditBooking(booking);
     };
 
     const handleDeleteBooking = async (guest_mail: string) => {
@@ -35,8 +38,8 @@ const Booking: React.FC = () => {
     return (
         <div className="container">
             <h2>Room Booking</h2>
-            <BookingForm onSubmit={handleAddBooking} />
-            <BookingList bookings={bookings} onUpdate={handleUpdateBooking} onDelete={handleDeleteBooking} />
+            <BookingForm onSubmit={handleAddOrUpdateBooking} editBooking={editBooking} />
+            <BookingList bookings={bookings} onUpdate={handleUpdateClick} onDelete={handleDeleteBooking} />
         </div>
     );
 };

@@ -3,9 +3,17 @@ import { Express } from 'express';
 import userRoute from './routes/index';
 import sequelize from './db/index';
 import syncTables from './models/syncModel';
+import cors from "cors"
 
 const app: Express = express();
 const port = 5000;
+
+app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
+
 
 app.use(express.json());
 app.use('/', userRoute);

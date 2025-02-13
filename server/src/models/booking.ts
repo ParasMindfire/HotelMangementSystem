@@ -16,7 +16,7 @@ const  Booking = sequelize.define(
     guest_mail: {
       type: DataTypes.STRING,
       allowNull:false,
-      unique:true,
+      // unique:true,
     },
     check_in: {
       type: DataTypes.DATE,

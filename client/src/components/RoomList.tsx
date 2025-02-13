@@ -2,21 +2,19 @@ import React from 'react';
 
 interface RoomProps {
     rooms: any[];
-    onUpdate: (data: any) => void;
+    onEdit: (room: any) => void;
     onDelete: (room_number: number) => void;
 }
 
-const RoomList: React.FC<RoomProps> = ({ rooms, onUpdate, onDelete }) => {
+const RoomList: React.FC<RoomProps> = ({ rooms, onEdit, onDelete }) => {
     return (
         <div>
             <h3>Room List</h3>
             <ul>
                 {rooms.map((room, index) => (
                     <li key={index}>
-                        Type: <strong>{room.type}</strong> - Price: ${room.price} - Available: {room.avilability}
-                        <button onClick={() => onUpdate({ room_number: room.room_number, availability: prompt("New Availability") })}>
-                            Update
-                        </button>
+                        Room No: <strong>{room.room_number}</strong> - Type: {room.type} - Price: ${room.price} - Available: {room.avilability}
+                        <button onClick={() => onEdit(room)}>Edit</button>
                         <button onClick={() => onDelete(room.room_number)}>Delete</button>
                     </li>
                 ))}

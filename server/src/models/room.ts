@@ -7,7 +7,7 @@ const  Room = sequelize.define(
     room_number: {
       type: DataTypes.INTEGER,
       primaryKey:true,
-      autoIncrement:true
+      // autoIncrement:true
     },
     type: {
       type: DataTypes.STRING,
