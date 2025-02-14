@@ -1,10 +1,17 @@
+import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize('hotel_management', 'root', 'Pa1ra2@3',
+dotenv.config();
+
+const sequelize = new Sequelize(
+  process.env.MYSQL_DATABASE || '',
+  process.env.MYSQL_USER || '',
+  process.env.PASSWORD, 
   {
-    host: '127.0.0.1',
-    dialect: 'mysql',
+    host: process.env.MYSQL_HOST || '127.0.0.1',
+    dialect:'mysql',
   }
 );
+
 
 export default sequelize;
