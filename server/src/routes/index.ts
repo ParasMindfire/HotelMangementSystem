@@ -1,19 +1,11 @@
-// import { Request,Response,NextFunction } from 'express';
-import {Express} from 'express';
 import express from 'express';
-import { getAllBooking, postBooking,updateBooking,deleteBooking} from '../controller/bookController';
-import { getAllrooms, postRooms,updateRooms,deleteRooms} from '../controller/roomController';
 
-const hotelRoute:Express=express();
+import roomRoute from './RoomRoutes';
+import bookingRoute from './BookingRoute';
 
-hotelRoute.get('/bookings',getAllBooking);
-hotelRoute.post('/bookings',postBooking);
-hotelRoute.patch('/bookings',updateBooking);
-hotelRoute.delete('/bookings',deleteBooking);
+const router=express.Router();
 
-hotelRoute.get('/rooms',getAllrooms);
-hotelRoute.post('/rooms',postRooms);
-hotelRoute.patch('/rooms',updateRooms);
-hotelRoute.delete('/rooms',deleteRooms);
+router.use('/',roomRoute);
+router.use('/',bookingRoute);
 
-export default hotelRoute;
+export default router;
